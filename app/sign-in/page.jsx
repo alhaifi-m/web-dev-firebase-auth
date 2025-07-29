@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
@@ -16,17 +16,19 @@ const SignIn = () => {
   const handleSignIn = async () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
-      if (res.user) {
+      if (res && res.user) {
         sessionStorage.setItem("user", "true");
         setEmail("");
         setPassword("");
-
         router.push("/");
+      } else {
+        console.error("Sign-in failed: No user object returned");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error during sign-in:", error.message);
     }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-gray-800 p-10 rounded-lg shadow-xl w-96">
